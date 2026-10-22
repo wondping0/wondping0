@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="90" viewBox="0 0 1200 90" role="img" aria-label="Thanks for visiting">
+<title>thanks for visiting</title>
+<style>
+  text { font-family: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size: 15px; fill: #8BA3C7; letter-spacing: 2px; }
+  .wave { animation: wave 4s ease-in-out infinite; }
+  @keyframes wave { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-60px); } }
+  @media (prefers-reduced-motion: reduce) { .wave { animation: none; } }
+</style>
+<g class="wave"><path d="M-60 45 Q-30 65 0 45 Q30 25 60 45 Q90 65 120 45 Q150 25 180 45 Q210 65 240 45 Q270 25 300 45 Q330 65 360 45 Q390 25 420 45 Q450 65 480 45 Q510 25 540 45 Q570 65 600 45 Q630 25 660 45 Q690 65 720 45 Q750 25 780 45 Q810 65 840 45 Q870 25 900 45 Q930 65 960 45 Q990 25 1020 45 Q1050 65 1080 45 Q1110 25 1140 45 Q1170 65 1200 45 Q1230 25 1260 45" fill="none" stroke="#38E1FF" stroke-width="1.5" opacity=".45"/></g>
+<rect x="410.0" y="27" width="380" height="36" rx="18" fill="#050B18" stroke="#1B2A47"/>
+<text x="600.0" y="50" text-anchor="middle">&lt;/&gt; THANKS FOR VISITING</text>
+</svg>

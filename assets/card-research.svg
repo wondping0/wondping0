@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="580" height="200" viewBox="0 0 580 200" role="img" aria-label="crypto research: LCG cracking, algebraic attacks on SMALL-PRESENT, differential attacks on LOONG64 &amp; Simeck.">
+<title>crypto research</title>
+<defs><clipPath id="c"><rect width="580" height="200" rx="14"/></clipPath>
+<linearGradient id="sweep" x1="0" x2="1"><stop offset="0" stop-color="#38E1FF" stop-opacity="0"/><stop offset=".5" stop-color="#38E1FF" stop-opacity=".16"/><stop offset="1" stop-color="#38E1FF" stop-opacity="0"/></linearGradient></defs>
+<style>
+  text { font-family: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; }
+  .n { fill: #E6F1FF; font-size: 26px; font-weight: 800; }
+  .t { fill: #38E1FF; font-size: 13px; letter-spacing: 1px; }
+  .d { fill: #8BA3C7; font-size: 16px; }
+  .sweep { animation: sweep 5s ease-in-out infinite; }
+  .dot { animation: blink 2s ease-in-out infinite; }
+  @keyframes sweep { 0% { transform: translateX(-580px); } 60%,100% { transform: translateX(580px); } }
+  @keyframes blink { 50% { opacity: .25; } }
+  @media (prefers-reduced-motion: reduce) { .sweep, .dot { animation: none; } }
+</style>
+<g clip-path="url(#c)">
+  <rect width="580" height="200" fill="#0A1428"/>
+  <rect class="sweep" width="580" height="200" fill="url(#sweep)"/>
+  <rect width="4" height="200" fill="#38E1FF"/>
+  <circle class="dot" cx="38" cy="44" r="6" fill="#38E1FF"/>
+  <text x="56" y="53" class="n">crypto research</text>
+  <text x="552" y="50" text-anchor="end" class="t">PYTHON · SAGE</text>
+  <path d="M30 76H552" stroke="#1B2A47"/>
+  <text x="30" y="112" class="d">LCG cracking, algebraic attacks</text>
+  <text x="30" y="138" class="d">on SMALL-PRESENT, differential</text>
+  <text x="30" y="164" class="d">attacks on LOONG64 &amp; Simeck.</text>
+  <text x="552" y="170" text-anchor="end" class="t">→</text>
+  <rect width="580" height="200" rx="14" fill="none" stroke="#1B2A47" stroke-width="2"/>
+</g>
+</svg>
