@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="412" height="252" viewBox="-6 -6 412 252" role="img" aria-label="aya's playground: Cryptography CTF marketplace with sandboxed verification and licensed challenge bundles.">
+<title>aya's playground: Cryptography CTF marketplace with sandboxed verification and licensed challenge bundles.</title>
+<defs><clipPath id="frame"><rect x="1" y="1" width="398" height="238" rx="18"/></clipPath></defs>
+<style>
+text { font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; fill: #172B4D; }
+.muted { fill: #425A76; }
+.accent { fill: #006B85; }
+.spin { animation: spin 26s linear infinite; }
+.reverse { animation-direction: reverse; animation-duration: 18s; }
+.pulse { animation: pulse 3s ease-in-out infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 50% { opacity: .45; } }
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+<rect x="1" y="1" width="398" height="238" rx="18" fill="#F6F8FA" stroke="#D0D7DE" stroke-width="2"/>
+<g clip-path="url(#frame)">
+<rect x="1" y="1" width="398" height="238" rx="18" fill="#FFFFFF"/>
+<path d="M2 18V222" stroke="#27743D" stroke-width="4"/>
+<circle class="pulse" cx="27" cy="36" r="5" fill="#27743D"/>
+<text x="42" y="43" font-size="25" font-weight="700">aya's playground</text>
+<text x="24" y="75" font-size="15" style="fill:#27743D">TYPESCRIPT / CTF</text>
+<path d="M24 94H376" stroke="#D0D7DE"/>
+<text x="24" y="123" font-size="18" class="muted">Cryptography CTF marketplace</text><text x="24" y="150" font-size="18" class="muted">with sandboxed verification and</text><text x="24" y="177" font-size="18" class="muted">licensed challenge bundles.</text><text x="376" y="224" text-anchor="end" font-size="20" style="fill:#27743D">↗</text></g>
+</svg>

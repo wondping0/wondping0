@@ -1,8 +1,14 @@
 <div align="center">
 
 <a href="https://wondping0.github.io">
-  <img src="assets/header.svg" width="100%" alt="wondping0 — Muhammad Faturrohman. Cryptography, CTF and developer tools.">
+  <picture>
+    <source media="(max-width: 767px) and (prefers-color-scheme: light)" srcset="assets/header-mobile-light.svg">
+    <source media="(max-width: 767px)" srcset="assets/header-mobile.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/header-light.svg">
+    <img src="assets/header.svg" width="100%" alt="wondping0 — Muhammad Faturrohman. Cryptography, CTF and developer tools.">
+  </picture>
 </a>
+<br><br>
 
 <p>
   <a href="https://wondping0.github.io"><img src="https://img.shields.io/badge/website-wondping0.github.io-38E1FF?style=for-the-badge&labelColor=0A1428" alt="Website"></a>
@@ -10,24 +16,47 @@
   <a href="https://github.com/wondping0?tab=followers"><img src="https://img.shields.io/github/followers/wondping0?style=for-the-badge&color=38E1FF&labelColor=0A1428" alt="Followers"></a>
 </p>
 
-<img src="assets/terminal.svg" width="100%" alt="Terminal: whoami — Muhammad Faturrohman, security researcher and tool builder.">
+<picture>
+    <source media="(max-width: 767px) and (prefers-color-scheme: light)" srcset="assets/terminal-mobile-light.svg">
+    <source media="(max-width: 767px)" srcset="assets/terminal-mobile.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/terminal-light.svg">
+    <img src="assets/terminal.svg" width="100%" alt="Terminal: whoami — Muhammad Faturrohman, security researcher and tool builder.">
+  </picture>
 
 </div>
 
 ## Things I build
 
 <p align="center">
-  <a href="https://wondping0.github.io/wondev/"><img src="assets/card-wondev.svg" width="49%" alt="wondev — write AI agent knowledge once, compile it to every agent format"></a>
-  <a href="https://wondping0.github.io/q-agent/"><img src="assets/card-q-agent.svg" width="49%" alt="q-agent — native fleet agents with signed commands and encrypted shells"></a>
-  <a href="https://wondping0.github.io/ayas-playground/"><img src="assets/card-ayas-playground.svg" width="49%" alt="Aya's Playground — cryptography CTF challenge marketplace"></a>
-  <a href="https://wondping0.github.io/#research"><img src="assets/card-research.svg" width="49%" alt="Crypto research — LCG cracking, algebraic and differential attacks"></a>
+  <a href="https://wondping0.github.io/wondev/"><picture>
+    <source media="(prefers-color-scheme: light)" srcset="assets/card-wondev-light.svg">
+    <img src="assets/card-wondev.svg" width="400" alt="wondev — write AI agent knowledge once, compile it to every agent format">
+  </picture></a>
+  <a href="https://wondping0.github.io/q-agent/"><picture>
+    <source media="(prefers-color-scheme: light)" srcset="assets/card-q-agent-light.svg">
+    <img src="assets/card-q-agent.svg" width="400" alt="q-agent — native fleet agents with signed commands and encrypted shells">
+  </picture></a>
+  <a href="https://wondping0.github.io/ayas-playground/"><picture>
+    <source media="(prefers-color-scheme: light)" srcset="assets/card-ayas-playground-light.svg">
+    <img src="assets/card-ayas-playground.svg" width="400" alt="Aya's Playground — cryptography CTF challenge marketplace">
+  </picture></a>
+  <a href="https://wondping0.github.io/#research"><picture>
+    <source media="(prefers-color-scheme: light)" srcset="assets/card-research-light.svg">
+    <img src="assets/card-research.svg" width="400" alt="Crypto research — LCG cracking, algebraic and differential attacks">
+  </picture></a>
 </p>
 
 ## Toolbox
 
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=go,ts,py,js,nodejs,vue,react,dart,flutter&theme=dark" alt="Go, TypeScript, Python, JavaScript, Node.js, Vue, React, Dart, Flutter"><br>
-  <img src="https://skillicons.dev/icons?i=c,cs,java,kotlin,php,docker,linux,git,sqlite&theme=dark" alt="C, C#, Java, Kotlin, PHP, Docker, Linux, Git, SQLite">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=go%2Cts%2Cpy%2Cjs%2Cnodejs%2Cvue%2Creact%2Cdart%2Cflutter&amp;theme=light&amp;perline=5">
+    <img src="https://skillicons.dev/icons?i=go,ts,py,js,nodejs,vue,react,dart,flutter&amp;theme=dark&amp;perline=5" width="240" alt="Go, TypeScript, Python, JavaScript, Node.js, Vue, React, Dart, Flutter">
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="https://skillicons.dev/icons?i=c%2Ccs%2Cjava%2Ckotlin%2Cphp%2Cdocker%2Clinux%2Cgit%2Csqlite&amp;theme=light&amp;perline=5">
+    <img src="https://skillicons.dev/icons?i=c,cs,java,kotlin,php,docker,linux,git,sqlite&amp;theme=dark&amp;perline=5" width="240" alt="C, C#, Java, Kotlin, PHP, Docker, Linux, Git, SQLite">
+  </picture>
 </p>
 
 ## Contribution snake
@@ -41,7 +70,10 @@
 </p>
 
 <div align="center">
-  <img src="assets/footer.svg" width="100%" alt="Thanks for visiting">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="assets/footer-light.svg">
+    <img src="assets/footer.svg" width="400" alt="Thanks for visiting">
+  </picture>
 </div>
 
-<!-- Assets are generated by scripts/build-assets.py -->
+<!-- Assets are generated by scripts/build-assets.py. Picture sources select the phone layout and GitHub theme; 400px cards wrap to one column on narrow screens. -->
