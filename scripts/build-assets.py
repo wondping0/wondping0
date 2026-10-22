@@ -18,6 +18,21 @@ PALETTES = {
 }
 
 
+def typing_css(name, text, size, start, duration, total, end):
+    """Discrete CSS clip-width keyframes, with a full-width static fallback."""
+    width = len(text) * size * .62 + 3
+    frames = [f'0%,{start/total*100:.4f}% {{ width: 0px; }}']
+    for i in range(1, len(text) + 1):
+        frames.append(f'{(start+duration*i/len(text))/total*100:.4f}% {{ width: {width*i/len(text):.2f}px; }}')
+    frames += [f'{end/total*100:.4f}% {{ width: {width:.2f}px; }}',
+               f'{(end+.01)/total*100:.4f}%,100% {{ width: 0px; }}']
+    return f'.{name} {{ width: {width:.2f}px; animation: {name} {total}s steps(1,end) infinite; }} @keyframes {name} {{ {" ".join(frames)} }}'
+
+
+def reveal_css(name, start, end, total):
+    return f'.{name} {{ animation: {name} {total}s steps(1,end) infinite; }} @keyframes {name} {{ 0%,{start/total*100:.4f}% {{ opacity: 0; }} {(start+.01)/total*100:.4f}%,{end/total*100:.4f}% {{ opacity: 1; }} {(end+.01)/total*100:.4f}%,100% {{ opacity: 0; }} }}'
+
+
 def svg(w, h, title, body, p, css=""):
     if p['bg'].startswith('var('):
         # Embedded SVGs inherit the host element's color scheme, including a
@@ -34,8 +49,10 @@ text {{ font-family: {MONO}; fill: {p['ink']}; }}
 .spin {{ animation: spin 26s linear infinite; }}
 .reverse {{ animation-direction: reverse; animation-duration: 18s; }}
 .pulse {{ animation: pulse 3s ease-in-out infinite; }}
+.blink {{ animation: blink 1s steps(1,end) infinite; }}
 @keyframes spin {{ to {{ transform: rotate(360deg); }} }}
 @keyframes pulse {{ 50% {{ opacity: .45; }} }}
+@keyframes blink {{ 50% {{ opacity: 0; }} }}
 {css}
 @media (prefers-reduced-motion: reduce) {{ * {{ animation: none !important; }} }}
 </style>
@@ -53,6 +70,8 @@ def avatar(cx, cy, r, p):
         glyphs.append(f'<g transform="rotate({a} {cx} {cy})"><text x="{cx}" y="{cy-r-24}" text-anchor="middle" font-size="18" class="accent" transform="rotate({-a} {cx} {cy-r-30})">{escape(symbol)}</text></g>')
     return f'''
 <defs><clipPath id="avatar"><circle cx="{cx}" cy="{cy}" r="{r}"/></clipPath></defs>
+<defs><radialGradient id="glow"><stop stop-color="{p['cyan']}" stop-opacity=".3"/><stop offset="1" stop-color="{p['cyan']}" stop-opacity="0"/></radialGradient></defs>
+<circle class="pulse" cx="{cx}" cy="{cy}" r="{r+40}" fill="url(#glow)"/>
 <g class="spin" style="transform-origin:{cx}px {cy}px">{''.join(glyphs)}<circle cx="{cx}" cy="{cy}" r="{r+17}" fill="none" stroke="{p['cyan']}" stroke-dasharray="2 8"/></g>
 <g class="spin reverse" style="transform-origin:{cx}px {cy}px"><circle cx="{cx}" cy="{cy}" r="{r+8}" fill="none" stroke="{p['blue']}" stroke-width="2" stroke-dasharray="60 24 12 24"/></g>
 <image href="data:image/jpeg;base64,{data}" x="{cx-r}" y="{cy-r}" width="{2*r}" height="{2*r}" clip-path="url(#avatar)"/>
@@ -67,15 +86,38 @@ def header(p, compact=False):
     anchor = "middle" if compact else "start"
     fullname_y = 302 if compact else 153
     role_y = 350 if compact else 203
-    body = avatar(cx, cy, r, p) + f'''
+    role_x, role_size = (30, 19) if compact else (324, 22)
+    roles = ['cryptography & cryptanalysis', 'CTF player & challenge author',
+             'building developer tools in Go / TS', 'breaking ciphers, shipping agents']
+    role_svg, css = [], []
+    for i, role in enumerate(roles):
+        rows = textwrap.wrap(role, width=28 if compact else 40)
+        start, end = i * 4.5 + .2, (i + 1) * 4.5 - .35
+        css.append(reveal_css(f'role-{i}', i*4.5+.05, end, 18))
+        group = []
+        for j, row in enumerate(rows):
+            name = f'type-role-{i}-{j}'
+            y = role_y + j * 28
+            css.append(typing_css(name, row, role_size, start+j*.8, 1.6/len(rows), 18, end))
+            group.append(f'<clipPath id="{name}"><rect x="{role_x}" y="{y-24}" height="32" class="{name}"/></clipPath><text x="{role_x}" y="{y}" font-size="{role_size}" clip-path="url(#{name})">{escape(row)}</text>')
+        role_svg.append(f'<g class="role role-{i}" style="opacity:{1 if i == 0 else 0}">{"".join(group)}</g>')
+    css.append(f'''
+.scan {{ animation: scan 6s linear infinite; }}
+.rain {{ opacity: 0; animation: fall 9s linear infinite; }}
+@keyframes scan {{ from {{ transform: translateY(-10px); }} to {{ transform: translateY({h+10}px); }} }}
+@keyframes fall {{ 0% {{ transform: translateY(-20px); opacity: 0; }} 15%,85% {{ opacity: .15; }} 100% {{ transform: translateY({h+20}px); opacity: 0; }} }}
+@media (prefers-reduced-motion: reduce) {{ .role {{ display: none; }} .role-0 {{ display: inline; }} .scan {{ display: none; }} }}
+''')
+    rain = ''.join(f'<text x="{w-32-i*64}" y="0" font-size="13" class="rain accent" style="animation-delay:{-i*1.7}s">{escape(t)}</text>' for i,t in enumerate(['01101','0x3f','e≡1','10011','mod p']))
+    body = f'<rect class="scan" width="{w}" height="2" fill="{p["cyan"]}" opacity=".18"/>{rain}' + avatar(cx, cy, r, p) + f'''
 <path d="M18 2H{w-18}" stroke="{p['cyan']}" stroke-width="3"/>
 <text x="{x}" y="{name_y}" text-anchor="{anchor}" font-size="{42 if compact else 56}" font-weight="800" class="accent">wondping0</text>
 <text x="{x}" y="{fullname_y}" text-anchor="{anchor}" font-size="{19 if compact else 23}">Muhammad Faturrohman</text>
-<text x="{x}" y="{role_y}" text-anchor="{anchor}" font-size="{21 if compact else 24}" class="muted">Breaking ciphers.</text>
-<text x="{x}" y="{role_y+30}" text-anchor="{anchor}" font-size="{21 if compact else 24}" class="muted">Shipping tools.</text>
+<text x="{role_x-18}" y="{role_y}" font-size="{role_size}" class="accent blink">›</text>
+{''.join(role_svg)}
 <text x="{x}" y="{416 if compact else 271}" text-anchor="{anchor}" font-size="{16 if compact else 18}" class="accent">CRYPTO / CTF / GO / TS</text>
 '''
-    return svg(w, h, "wondping0 — Muhammad Faturrohman. Breaking ciphers. Shipping tools.", body, p)
+    return svg(w, h, "wondping0 — Muhammad Faturrohman. Cryptography, CTF and developer tools.", body, p, '\n'.join(css))
 
 
 SESSION = [
@@ -94,13 +136,29 @@ def terminal(p, compact=False):
     w = 400 if compact else 900
     size, wrap, step = (18, 32, 28) if compact else (23, 59, 34)
     y = 87
-    lines = []
+    lines, css = [], []
+    t = .4
     for i, (kind, content) in enumerate(SESSION):
         color = p['ink'] if kind == 'cmd' else p['green'] if kind == 'hi' else p['muted']
         content = '$ ' + content if kind == 'cmd' else content
-        for line in textwrap.wrap(content, width=wrap, break_long_words=False):
-            lines.append(f'<text x="24" y="{y}" font-size="{size}" style="fill:{color};animation-delay:{i * .12:.2f}s" class="line">{escape(line)}</text>')
+        group = []
+        for j, line in enumerate(textwrap.wrap(content, width=wrap, break_long_words=False)):
+            clip = ''
+            if kind == 'cmd':
+                name = f'type-command-{i}-{j}'
+                duration = max(.6, len(line)*.07)
+                css.append(typing_css(name, line, size, t, duration, 16, 15.52))
+                group.append(f'<clipPath id="{name}"><rect x="24" y="{y-26}" height="36" class="{name}"/></clipPath>')
+                clip = f' clip-path="url(#{name})"'
+                t += duration + .25
+            group.append(f'<text x="24" y="{y}" font-size="{size}" style="fill:{color}"{clip}>{escape(line)}</text>')
             y += step
+        if kind != 'cmd':
+            css.append(reveal_css(f'output-{i}', t, 15.52, 16))
+            lines.append(f'<g class="output-{i}">{"".join(group)}</g>')
+            t += .55
+        else:
+            lines.extend(group)
         y += 9 if kind != 'cmd' else 0
     h = y + 24
     body = f'''
@@ -108,10 +166,9 @@ def terminal(p, compact=False):
 <circle cx="26" cy="25" r="5" fill="#E5534B"/><circle cx="44" cy="25" r="5" fill="#B8860B"/><circle cx="62" cy="25" r="5" fill="{p['green']}"/>
 <text x="{w-24}" y="31" text-anchor="end" font-size="{14 if compact else 18}" class="muted">wondping0@github: ~</text>
 {''.join(lines)}
-<rect class="pulse" x="24" y="{y-8}" width="10" height="18" fill="{p['cyan']}"/>
+<rect class="blink" x="24" y="{y-8}" width="10" height="18" fill="{p['cyan']}"/>
 '''
-    css = '.line { animation: appear .5s ease-out both; } @keyframes appear { from { transform: translateY(4px); } to { transform: translateY(0); } }'
-    return svg(w, h, "About me: security research, cryptanalysis, CTF authoring and developer tools.", body, p, css)
+    return svg(w, h, "About me: security research, cryptanalysis, CTF authoring and developer tools.", body, p, '\n'.join(css))
 
 
 PROJECTS = [
@@ -129,6 +186,8 @@ def card(p, project, light=False):
     h = 240
     body = f'''
 <rect x="1" y="1" width="398" height="{h-2}" rx="18" fill="{p['surface']}"/>
+<defs><linearGradient id="sweep"><stop stop-color="{accent}" stop-opacity="0"/><stop offset=".5" stop-color="{accent}" stop-opacity=".16"/><stop offset="1" stop-color="{accent}" stop-opacity="0"/></linearGradient></defs>
+<rect class="sweep" width="400" height="{h}" fill="url(#sweep)"/>
 <path d="M2 18V{h-18}" stroke="{accent}" stroke-width="4"/>
 <circle class="pulse" cx="27" cy="36" r="5" fill="{accent}"/>
 <text x="42" y="43" font-size="{25 if len(name) > 14 else 28}" font-weight="700">{escape(name)}</text>
@@ -139,16 +198,19 @@ def card(p, project, light=False):
         body += f'<text x="24" y="{123+i*27}" font-size="18" class="muted">{escape(line)}</text>'
     body += f'<text x="376" y="{h-16}" text-anchor="end" font-size="20" style="fill:{accent}">↗</text>'
     # The viewBox includes a gutter: GitHub removes custom image margin styles.
-    return svg(400, h, f'{name}: {description}', body, p).replace(
+    css = '.sweep { animation: sweep 5s ease-in-out infinite; } @keyframes sweep { 0% { transform: translateX(-400px); } 60%,100% { transform: translateX(400px); } }'
+    return svg(400, h, f'{name}: {description}', body, p, css).replace(
         'width="400" height="240" viewBox="0 0 400 240"',
         'width="412" height="252" viewBox="-6 -6 412 252"', 1)
 
 
 def footer(p):
-    body = f'''<path d="M0 36H400" stroke="{p['cyan']}" opacity=".4"/>
+    wave = ' '.join(f'Q{x+30} {20 if (x//60)%2 == 0 else 52} {x+60} 36' for x in range(-60,460,60))
+    body = f'''<path class="wave" d="M-60 36 {wave}" fill="none" stroke="{p['cyan']}" opacity=".4"/>
 <rect x="52" y="17" width="296" height="38" rx="19" fill="{p['bg']}" stroke="{p['line']}"/>
 <text x="200" y="42" text-anchor="middle" font-size="16" class="muted">&lt;/&gt; THANKS FOR VISITING</text>'''
-    return svg(400, 72, 'Thanks for visiting', body, p)
+    css = '.wave { animation: wave 4s ease-in-out infinite; } @keyframes wave { 50% { transform: translateX(-60px); } }'
+    return svg(400, 72, 'Thanks for visiting', body, p, css)
 
 
 def main():
