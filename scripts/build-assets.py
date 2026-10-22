@@ -19,6 +19,11 @@ PALETTES = {
 
 
 def svg(w, h, title, body, p, css=""):
+    if p['bg'].startswith('var('):
+        # Embedded SVGs inherit the host element's color scheme, including a
+        # manually selected GitHub theme that differs from the OS preference.
+        variables = lambda theme: ';'.join(f'--{key}:{value}' for key, value in PALETTES[theme].items())
+        css += f":root {{{variables('dark')}}} @media (prefers-color-scheme: light) {{ :root {{{variables('light')}}} }}"
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="{escape(title)}">
 <title>{escape(title)}</title>
 <defs><clipPath id="frame"><rect x="1" y="1" width="{w-2}" height="{h-2}" rx="18"/></clipPath></defs>
@@ -150,10 +155,12 @@ def main():
     for theme, p in PALETTES.items():
         suffix = '-light' if theme == 'light' else ''
         assets = {f'header{suffix}.svg': header(p),
-                  f'header-mobile{suffix}.svg': header(p, True),
                   f'terminal{suffix}.svg': terminal(p),
-                  f'terminal-mobile{suffix}.svg': terminal(p, True),
                   f'footer{suffix}.svg': footer(p)}
+        if theme == 'dark':
+            adaptive = {key: f'var(--{key})' for key in p}
+            assets['header-mobile.svg'] = header(adaptive, True)
+            assets['terminal-mobile.svg'] = terminal(adaptive, True)
         for project in PROJECTS:
             assets[f'card-{project[0]}{suffix}.svg'] = card(p, project, theme == 'light')
         for name, content in assets.items():

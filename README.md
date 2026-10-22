@@ -2,7 +2,6 @@
 
 <a href="https://wondping0.github.io">
   <picture>
-    <source media="(max-width: 767px) and (prefers-color-scheme: light)" srcset="assets/header-mobile-light.svg">
     <source media="(max-width: 767px)" srcset="assets/header-mobile.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/header-light.svg">
     <img src="assets/header.svg" width="100%" alt="wondping0 — Muhammad Faturrohman. Cryptography, CTF and developer tools.">
@@ -17,7 +16,6 @@
 </p>
 
 <picture>
-    <source media="(max-width: 767px) and (prefers-color-scheme: light)" srcset="assets/terminal-mobile-light.svg">
     <source media="(max-width: 767px)" srcset="assets/terminal-mobile.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/terminal-light.svg">
     <img src="assets/terminal.svg" width="100%" alt="Terminal: whoami — Muhammad Faturrohman, security researcher and tool builder.">
