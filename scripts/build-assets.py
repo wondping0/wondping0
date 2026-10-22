@@ -313,10 +313,69 @@ def footer():
 '''
 
 
+# ------------------------------------------------------------- writeups ---
+
+WRITEUPS = [
+    ("2023-11", "ASEAN Cyber Shield 2023", "quals + finals", 8),
+    ("2023-11", "National Cyber Week 2023", "quals", 3),
+    ("2023-10", "TCP1P CTF 2023", "crypto", 7),
+    ("2023-09", "COMPFEST 15", "quals", 4),
+    ("2023-08", "HackToday 2023", "quals", 4),
+]
+
+
+def writeups():
+    w = 1200
+    top = 96
+    step = 46
+    h = top + step * len(WRITEUPS) + 30
+    total = 12.0
+    rows = []
+    for i, (date, name, note, n) in enumerate(WRITEUPS):
+        y = top + step * i
+        show = (0.8 + i * 0.35) / total
+        bar = 18 * n
+        rows.append(
+            f'<g opacity="0"><animate attributeName="opacity" dur="{total}s" repeatCount="indefinite" '
+            f'calcMode="discrete" keyTimes="0;{show:.4f};0.96;1" values="0;1;0;0"/>'
+            f'<text x="40" y="{y + 20}" class="date">{date}</text>'
+            f'<text x="160" y="{y + 20}" class="name">{escape(name)}</text>'
+            f'<text x="560" y="{y + 20}" class="note">{escape(note)}</text>'
+            f'<rect x="760" y="{y + 7}" width="{bar}" height="16" rx="3" fill="{CYAN}" opacity=".85">'
+            f'<animate attributeName="width" dur="{total}s" repeatCount="indefinite" '
+            f'keyTimes="0;{show:.4f};{show + 0.06:.4f};1" values="0;0;{bar};{bar}"/></rect>'
+            f'<text x="{w - 40}" y="{y + 20}" text-anchor="end" class="n">{n} solves</text></g>'
+            f'<path d="M40 {y + step - 8}H{w - 40}" stroke="{LINE}"/>'
+        )
+    total_solves = sum(r[3] for r in WRITEUPS)
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="Writeups: {len(WRITEUPS)} CTF events, {total_solves} challenge solves, mostly cryptography.">
+<title>wondping0 writeups</title>
+<style>
+  text {{ font-family: {MONO}; font-size: 17px; }}
+  .ps {{ fill: {CYAN}; }}
+  .cmd {{ fill: {INK}; }}
+  .date {{ fill: {MUTED}; font-size: 15px; }}
+  .name {{ fill: {INK}; font-weight: 700; }}
+  .note {{ fill: {MUTED}; font-size: 15px; }}
+  .n {{ fill: {MUTED}; font-size: 15px; }}
+  .bar {{ fill: {MUTED}; font-size: 13px; letter-spacing: 1px; }}
+</style>
+<rect width="{w}" height="{h}" rx="16" fill="{BG}"/>
+<rect x="1" y="1" width="{w - 2}" height="{h - 2}" rx="15" fill="none" stroke="{LINE}" stroke-width="2"/>
+<path d="M1 46H{w - 1}" stroke="{LINE}"/>
+<circle cx="30" cy="24" r="6" fill="#FF5F57"/><circle cx="50" cy="24" r="6" fill="{AMBER}"/><circle cx="70" cy="24" r="6" fill="{GREEN}"/>
+<text x="{w / 2}" y="29" text-anchor="middle" class="bar">wondping0.github.io/writeups</text>
+<text x="40" y="78" class="ps">$</text><text x="64" y="78" class="cmd">ls ~/writeups --sort=date  # {total_solves} solves, mostly crypto</text>
+{"".join(rows)}
+</svg>
+'''
+
+
 def main():
     (ASSETS / "header.svg").write_text(header(), encoding="utf-8")
     (ASSETS / "terminal.svg").write_text(terminal(), encoding="utf-8")
     (ASSETS / "footer.svg").write_text(footer(), encoding="utf-8")
+    (ASSETS / "writeups.svg").write_text(writeups(), encoding="utf-8")
     slugs = ["wondev", "q-agent", "ayas-playground", "research"]
     for slug, p in zip(slugs, PROJECTS):
         (ASSETS / f"card-{slug}.svg").write_text(card(*p), encoding="utf-8")

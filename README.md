@@ -23,6 +23,20 @@
   <a href="https://wondping0.github.io/#research"><img src="assets/card-research.svg" width="49%" alt="Crypto research — LCG cracking, algebraic and differential attacks"></a>
 </p>
 
+## Writeups
+
+<a href="https://wondping0.github.io/writeups/">
+  <img src="assets/writeups.svg" width="100%" alt="Writeups: 5 CTF events, 26 challenge solves, mostly cryptography.">
+</a>
+
+| Event | Date | Solves | Read |
+| --- | --- | :-: | --- |
+| ASEAN Cyber Shield 2023 · quals + finals | Nov 2023 | 8 | [site](https://wondping0.github.io/writeups/acs-2023/) · [HackMD](https://hackmd.io/@wondPing/H1Q2nJCN6) |
+| National Cyber Week 2023 · quals | Nov 2023 | 3 | [site](https://wondping0.github.io/writeups/ncw-2023/) · [HackMD](https://hackmd.io/@wondPing/S1lsfbEOVp) |
+| TCP1P CTF 2023 | Oct 2023 | 7 | [site](https://wondping0.github.io/writeups/tcp1pctf-2023/) · [HackMD](https://hackmd.io/@wondPing/rkV5nQ5b6) |
+| COMPFEST 15 · quals | Sep 2023 | 4 | [site](https://wondping0.github.io/writeups/compfest-15/) · [HackMD](https://hackmd.io/@wondPing/H1KMHdFJT) |
+| HackToday 2023 · quals | Aug 2023 | 4 | [site](https://wondping0.github.io/writeups/hacktoday-2023/) · [HackMD](https://hackmd.io/@wondPing/rJpbwFPa2) |
+
 ## Toolbox
 
 <p align="center">
